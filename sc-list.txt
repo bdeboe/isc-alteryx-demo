@@ -1,0 +1,7 @@
+<cspapp>/bootstrap-4.5.2
+<cspapp>/demo.js
+<cspapp>/index.html
+<cspapp>/jquery-3.4.1.min.js
+Alteryx.EncounterCurrent.cls
+Alteryx.EncounterHistory.cls
+Alteryx.Util.REST.cls

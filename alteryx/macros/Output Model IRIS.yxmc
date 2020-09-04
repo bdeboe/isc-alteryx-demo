@@ -1,0 +1,604 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2020.2">
+  <Nodes>
+    <Node ToolID="2">
+      <GuiSettings Plugin="AlteryxRPluginGui.R">
+        <Position x="246" y="402" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <RScript><![CDATA[######
+# Main macro script
+# Determine if pmml and its dependencies are installed, and install them if they are not
+needed <-  c("XML", "pmml", "RODBC") %in% row.names(installed.packages())
+if (!all(needed)) {
+	if (!needed[1]) {
+		install.packages("XML", repos = "https://cran.rstudio.com")
+	}
+	if (!needed[2]) {
+  	install.packages("pmml", repos = "https://cran.rstudio.com")
+  }
+	if (!needed[3]) {
+  	install.packages("RODBC", repos = "https://cran.rstudio.com")
+  }
+}
+
+# IRIS params
+iris_dsn <- scan(what = character(), sep = "\n", nmax = 1)
+%Question.iris.dsn%
+iris_cls <- scan(what = character(), sep = "\n", nmax = 1)
+%Question.iris.classname%
+
+if (('%Question.save.iris%'=='True') && ((length(iris_dsn) == 0) || length(iris_cls) == 0)) {
+   stop.Alteryx("IRIS connection and class name are required")
+}
+
+
+# Obtain the file paths
+# The RDS path
+rds_path <- scan(what = character(), sep = "\n", nmax = 1)
+%Question.rds.path%
+# The PMML path
+pmml_path <- scan(what = character(), sep = "\n", nmax = 1)
+%Question.pmml.path%
+
+# Make sure a path has been given
+if (('%Question.save.rds%'=='True' && length(rds_path) == 0) || ('%Question.save.pmml%'=='True' && length(pmml_path) == 0)) {
+  stop.Alteryx("A file path was not provided")
+}
+# From the incoming data stream get the model object
+model_df <- read.Alteryx("#1")
+model_obj <- unserializeObject(as.character(model_df$Object[1]))
+# Make sure the stream is actually a Name/Object table
+if(!all(names(model_df) %in% c("Name", "Object"))) {
+  stop.Alteryx("The input data stream does not appear to contain a predictive model object")
+}
+# Branch depending on the selected output format
+if ('%Question.save.rds%') {
+  rds_path <- gsub("\\\\", "/", rds_path, fixed = TRUE)
+  eval(parse(text = paste('saveRDS(model_obj, file = "', rds_path, '")', sep = "")))
+} else {
+  library(XML)
+  library(pmml)
+  if ('%Question.save.pmml%') {
+	  pmml_path <- gsub("\\\\", "/", pmml_path, fixed = TRUE)
+  	eval(parse(text = paste('saveXML(pmml(model_obj), "', pmml_path, '")', sep = "")))
+  } else {
+    library(RODBC)
+    AlteryxMessage("Generating PMML", msg.consts$INFO, priority.consts$LOW)
+    saveXML(pmml(model_obj), "C:\\temp\\AlteryxTempModel.pmml")
+    AlteryxMessage("Connecting to IRIS", msg.consts$INFO, priority.consts$LOW)
+    conn <- odbcConnect(iris_dsn)
+    AlteryxMessage("Writing PMML to IRIS", msg.consts$INFO, priority.consts$LOW)
+    ret <- sqlQuery(conn, paste("SELECT Alteryx.LoadPMMLFile('C:\\temp\\AlteryxTempModel.pmml','",iris_cls,"')", sep=""))
+    AlteryxMessage("Done!", msg.consts$INFO, priority.consts$LOW)
+    odbcClose(conn)
+  } 
+}
+]]></RScript>
+          <UseFullUpdate value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name>Output Model</Name>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxRPluginEngine.dll" EngineDllEntryPoint="AlteryxR" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxGuiToolkit.Questions.Tab.Tab">
+        <Position x="0" y="0" width="59" height="59" />
+      </GuiSettings>
+      <Properties>
+        <Configuration />
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.MacroInput.MacroInput">
+        <Position x="126" y="402" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <UseFileInput value="True" />
+          <Name>Input4</Name>
+          <Abbrev />
+          <ShowFieldMap value="False" />
+          <Optional value="False" />
+          <FileInput>
+            <Configuration>
+              <Passwords />
+              <File OutputFileName="" FileFormat="19" SearchSubDirs="False" RecordLimit="">DM_Logit_Model.yxdb</File>
+              <FormatSpecificOptions />
+            </Configuration>
+          </FileInput>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name>Input Data (1)</Name>
+          <AnnotationText>DM_Logit_Model.yxdb</AnnotationText>
+          <DefaultAnnotationText>DM_Logit_Model.yxdb</DefaultAnnotationText>
+          <Left value="True" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxMacroInput" />
+    </Node>
+    <Node ToolID="12">
+      <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+        <Position x="54" y="54" width="648" height="96" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Text>Alteryx Macro:
+Output Model to IRIS</Text>
+          <Font name="Microsoft Sans Serif" size="18" style="0" />
+          <TextColor name="White" />
+          <FillColor r="95" g="152" b="171" />
+          <Shape shape="0" />
+          <Justification Justification="0" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+    </Node>
+    <Node ToolID="16">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="584" y="113" width="141.6817" height="24" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Tools Used</Caption>
+          <Style TextColor="#2f4f4f" FillColor="#ffffff" BorderColor="#2f4f4f" Transparency="10" Margin="10" />
+          <Disabled value="False" />
+          <Folded value="True" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="15">
+          <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+            <Position x="594" y="142" width="161" height="67" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Text>TOOLS USED:
+R
+Text
+Tool Container</Text>
+              <Font name="Microsoft Sans Serif" size="9.75" style="0" />
+              <TextColor name="Black" />
+              <FillColor r="255" g="243" b="196" />
+              <Shape shape="0" />
+              <Justification Justification="2" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="14">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="546" y="77" width="190.1362" height="24" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Module Description</Caption>
+          <Style TextColor="#2f4f4f" FillColor="#ffffff" BorderColor="#2f4f4f" Transparency="10" Margin="10" />
+          <Disabled value="False" />
+          <Folded value="True" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="13">
+          <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+            <Position x="556" y="106" width="132" height="96" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Text>Write to disk either a native R binary file or PMML file an R model object.</Text>
+              <Font name="Microsoft Sans Serif" size="9.75" style="0" />
+              <TextColor name="Black" />
+              <FillColor name="White" />
+              <Shape shape="0" />
+              <Justification Justification="0" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="11">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="89.99998" y="187" width="679.7078" height="180" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Interface Tools</Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="False" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="9">
+          <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+            <Position x="115" y="236.9998" width="199.8481" height="103" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Caption>R binary file interface</Caption>
+              <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="10" />
+              <Disabled value="False" />
+              <Folded value="False" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <ChildNodes>
+            <Node ToolID="5">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.FileBrowse.FileBrowse">
+                <Position x="233" y="270.9998" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>rds.path</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+            <Node ToolID="7">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.RadioButtonGroup.RadioButtonGroup">
+                <Position x="125" y="270.9998" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>save.rds</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+          </ChildNodes>
+        </Node>
+        <Node ToolID="10">
+          <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+            <Position x="330" y="239" width="189.6713" height="103" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Caption>PMML file interface</Caption>
+              <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="10" />
+              <Disabled value="False" />
+              <Folded value="False" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <ChildNodes>
+            <Node ToolID="8">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.RadioButtonGroup.RadioButtonGroup">
+                <Position x="340" y="273" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>save.pmml</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+            <Node ToolID="6">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.FileBrowse.FileBrowse">
+                <Position x="450" y="273" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>pmml.path</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+          </ChildNodes>
+        </Node>
+        <Node ToolID="19">
+          <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+            <Position x="536" y="236" width="208.7078" height="103" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Caption>PMML to IRIS interface</Caption>
+              <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="10" />
+              <Disabled value="False" />
+              <Folded value="False" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <ChildNodes>
+            <Node ToolID="20">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.TextBox.QuestionTextBox">
+                <Position x="642" y="270" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>iris.classname</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+            <Node ToolID="23">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.TextBox.QuestionTextBox">
+                <Position x="594" y="270" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>iris.dsn</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+            <Node ToolID="17">
+              <GuiSettings Plugin="AlteryxGuiToolkit.Questions.RadioButtonGroup.RadioButtonGroup">
+                <Position x="546" y="270" width="59" height="59" />
+              </GuiSettings>
+              <Properties>
+                <Configuration />
+                <Annotation DisplayMode="0">
+                  <Name>save.iris</Name>
+                  <DefaultAnnotationText />
+                  <Left value="False" />
+                </Annotation>
+              </Properties>
+            </Node>
+          </ChildNodes>
+        </Node>
+      </ChildNodes>
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection name="#1">
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="False" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <Constants>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>rds.path</Name>
+        <Value>C:\Users\dputler\Work\Cust_Success\model.rds</Value>
+        <IsNumeric value="False" />
+      </Constant>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>save.rds</Name>
+        <Value>True</Value>
+        <IsNumeric value="False" />
+      </Constant>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>pmml.path</Name>
+        <Value>C:\Users\dputler\Work\Cust_Success\model.pmml</Value>
+        <IsNumeric value="False" />
+      </Constant>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>save.pmml</Name>
+        <Value />
+        <IsNumeric value="False" />
+      </Constant>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>save.iris</Name>
+        <Value />
+        <IsNumeric value="False" />
+      </Constant>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>iris.classname</Name>
+        <Value />
+        <IsNumeric value="False" />
+      </Constant>
+      <Constant>
+        <Namespace>Question</Namespace>
+        <Name>iris.dsn</Name>
+        <Value />
+        <IsNumeric value="False" />
+      </Constant>
+    </Constants>
+    <MetaInfo>
+      <NameIsFileName value="False" />
+      <Name>Output Model</Name>
+      <Description>This Macro is part of the Predictive District
+
+Write to disk either a native R binary file or PMML file an R model object.
+
+To use this macro, two additional R packages need to be installed: XML and pmml. The link below provides instructions on how to install R packages that can be accessed by Alteryx. The macro will attempt to install the needed R packages if they are not already installed, but this may be prevented by certain firewalls.</Description>
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName>In/Out</CategoryName>
+      <SearchTags>input, output, model, R, PMML, read, write</SearchTags>
+      <Author>Alteryx Innovation (Dan Putler)</Author>
+      <Company>Alteryx, Inc.</Company>
+      <Copyright>2016, Alteryx, Inc.</Copyright>
+      <DescriptionLink actual="http://community.alteryx.com/t5/Alteryx-Knowledge-Base/Using-Additional-R-Packages-Times-Series-Clustering-Example/ta-p/4411" displayed="Using additional R packages" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+    <RuntimeProperties>
+      <Actions />
+      <Questions>
+        <Question>
+          <Type>Tab</Type>
+          <Description>Output Model - Configuration</Description>
+          <Name>Tab (3)</Name>
+          <ToolId value="3" />
+          <Questions>
+            <Question>
+              <Type>MacroInput</Type>
+              <Description>Macro Input (4)</Description>
+              <Name>Macro Input (4)</Name>
+              <ToolId value="4" />
+            </Question>
+            <Question>
+              <Type>RadioGroup</Type>
+              <Description>Save as a R native (RDS) binary file</Description>
+              <Name>save.rds</Name>
+              <ToolId value="7" />
+              <Questions>
+                <Question>
+                  <Type>FileBrowse</Type>
+                  <Description>Model RDS File</Description>
+                  <Name>rds.path</Name>
+                  <ToolId value="5" />
+                  <SaveAs value="True" />
+                  <Mode>FileSpec</Mode>
+                  <FileSpec>RDS (*.RDS)|*.RDS|rds (*.rds)|*.rds</FileSpec>
+                </Question>
+              </Questions>
+              <Default value="True" />
+              <Collapsable value="True" />
+            </Question>
+            <Question>
+              <Type>RadioGroup</Type>
+              <Description>Save as a PMML file</Description>
+              <Name>save.pmml</Name>
+              <ToolId value="8" />
+              <Questions>
+                <Question>
+                  <Type>FileBrowse</Type>
+                  <Description>Model PMML File</Description>
+                  <Name>pmml.path</Name>
+                  <ToolId value="6" />
+                  <SaveAs value="True" />
+                  <Mode>FileSpec</Mode>
+                  <FileSpec>pmml (*.pmml)|*.pmml</FileSpec>
+                </Question>
+              </Questions>
+              <Default value="False" />
+              <Collapsable value="True" />
+            </Question>
+            <Question>
+              <Type>RadioGroup</Type>
+              <Description>Save as a PMML model to IRIS</Description>
+              <Name>save.iris</Name>
+              <ToolId value="17" />
+              <Questions>
+                <Question>
+                  <Type>TextBox</Type>
+                  <Description>IRIS database (DSN)</Description>
+                  <Name>iris.dsn</Name>
+                  <ToolId value="23" />
+                  <Default />
+                  <Password value="False" />
+                  <Multiline value="False" />
+                  <Hidden value="False" />
+                </Question>
+                <Question>
+                  <Type>TextBox</Type>
+                  <Description>PMML class name</Description>
+                  <Name>iris.classname</Name>
+                  <ToolId value="20" />
+                  <Default>Alteryx.PMMLModel</Default>
+                  <Password value="False" />
+                  <Multiline value="False" />
+                  <Hidden value="False" />
+                </Question>
+              </Questions>
+              <Default value="False" />
+              <Collapsable value="True" />
+            </Question>
+          </Questions>
+        </Question>
+      </Questions>
+      <ModuleType>Macro</ModuleType>
+      <MacroCustomHelp value="True" />
+      <MacroCustomHelpLink>http://help.alteryx.com/current/index.htm#Output_Model.htm</MacroCustomHelpLink>
+      <MacroDynamicOutputFields value="False" />
+      <MacroImage>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</MacroImage>
+      <MacroInputs />
+      <MacroOutputs />
+      <Wiz_CustomHelp value="False" />
+      <Wiz_CustomGraphic value="False" />
+      <Wiz_ShowOutput value="True" />
+      <Wiz_OpenOutputTools>
+        <Tool ToolId="4" Selected="True" />
+      </Wiz_OpenOutputTools>
+      <Wiz_OutputMessage />
+      <Wiz_NoOutputFilesMessage />
+      <Wiz_ChainRunWizard />
+    </RuntimeProperties>
+  </Properties>
+</AlteryxDocument>

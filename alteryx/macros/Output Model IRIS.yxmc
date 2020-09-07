@@ -67,11 +67,16 @@ if ('%Question.save.rds%') {
     library(RODBC)
     AlteryxMessage("Generating PMML", msg.consts$INFO, priority.consts$LOW)
     saveXML(pmml(model_obj), "C:\\temp\\AlteryxTempModel.pmml")
-    AlteryxMessage("Connecting to IRIS", msg.consts$INFO, priority.consts$LOW)
+    AlteryxMessage(paste('Connecting to IRIS DSN "',iris_dsn,'"'), msg.consts$INFO, priority.consts$LOW)
     conn <- odbcConnect(iris_dsn)
-    AlteryxMessage("Writing PMML to IRIS", msg.consts$INFO, priority.consts$LOW)
-    ret <- sqlQuery(conn, paste("SELECT Alteryx.LoadPMMLFile('C:\\temp\\AlteryxTempModel.pmml','",iris_cls,"')", sep=""))
-    AlteryxMessage("Done!", msg.consts$INFO, priority.consts$LOW)
+    AlteryxMessage(paste('Writing PMML to IRIS class "',iris_cls,'"'), msg.consts$INFO, priority.consts$LOW)
+    ret <- sqlQuery(conn, paste("SELECT Alteryx_Util.LoadPMMLFile('C:\\temp\\AlteryxTempModel.pmml','",iris_cls,"') AS msg", sep=""))
+    retval <- ret$msg[[1]]
+    if (grepl('ERROR',retval)) {
+	    AlteryxMessage(paste('IRIS response: ', retval), msg.consts$ERROR, priority.consts$HIGH)
+		} else {
+	    AlteryxMessage(paste('IRIS response: ', retval), msg.consts$INFO, priority.consts$LOW)
+		}
     odbcClose(conn)
   } 
 }
@@ -124,9 +129,6 @@ if ('%Question.save.rds%') {
           <DefaultAnnotationText>DM_Logit_Model.yxdb</DefaultAnnotationText>
           <Left value="True" />
         </Annotation>
-        <Dependencies>
-          <Implicit />
-        </Dependencies>
       </Properties>
       <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxMacroInput" />
     </Node>
@@ -236,7 +238,7 @@ Tool Container</Text>
     </Node>
     <Node ToolID="11">
       <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
-        <Position x="89.99998" y="187" width="679.7078" height="180" />
+        <Position x="90" y="187" width="679.7078" height="180" />
       </GuiSettings>
       <Properties>
         <Configuration>
@@ -455,7 +457,7 @@ Tool Container</Text>
       </Constant>
       <Constant>
         <Namespace>Question</Namespace>
-        <Name>save.iris</Name>
+        <Name>iris.dsn</Name>
         <Value />
         <IsNumeric value="False" />
       </Constant>
@@ -467,28 +469,27 @@ Tool Container</Text>
       </Constant>
       <Constant>
         <Namespace>Question</Namespace>
-        <Name>iris.dsn</Name>
+        <Name>save.iris</Name>
         <Value />
         <IsNumeric value="False" />
       </Constant>
     </Constants>
     <MetaInfo>
       <NameIsFileName value="False" />
-      <Name>Output Model</Name>
+      <Name>Publish PMML</Name>
       <Description>This Macro is part of the Predictive District
 
-Write to disk either a native R binary file or PMML file an R model object.
-
-To use this macro, two additional R packages need to be installed: XML and pmml. The link below provides instructions on how to install R packages that can be accessed by Alteryx. The macro will attempt to install the needed R packages if they are not already installed, but this may be prevented by certain firewalls.</Description>
+ and extends the Model Output tool.
+Besides writing native R binary or PMML files to disk, the PMML version of the model can also be written to an InterSystems IRIS instance, after installing the RODBC library. The macro will attempt to install the needed R packages if they are not already installed, but this may be prevented by certain firewalls.</Description>
       <RootToolName />
       <ToolVersion />
       <ToolInDb value="False" />
       <CategoryName>In/Out</CategoryName>
-      <SearchTags>input, output, model, R, PMML, read, write</SearchTags>
-      <Author>Alteryx Innovation (Dan Putler)</Author>
-      <Company>Alteryx, Inc.</Company>
-      <Copyright>2016, Alteryx, Inc.</Copyright>
-      <DescriptionLink actual="http://community.alteryx.com/t5/Alteryx-Knowledge-Base/Using-Additional-R-Packages-Times-Series-Clustering-Example/ta-p/4411" displayed="Using additional R packages" />
+      <SearchTags>input, output, model, R, PMML, read, write, InterSystems, IRIS</SearchTags>
+      <Author>Benjamin De Boe</Author>
+      <Company>InterSystems Corporation</Company>
+      <Copyright>2020, InterSystems Corporation</Copyright>
+      <DescriptionLink actual="https://github.com/bdeboe/isc-alteryx-demo" displayed="Publish PMML to IRIS" />
       <Example>
         <Description />
         <File />

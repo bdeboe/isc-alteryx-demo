@@ -13,8 +13,8 @@ function getRisk(patient, dischargeTo) {
 			var encID = response['_input']['Encounter_ID'];
 			var icon = $('<span class="fa">').css('font-size', '18px');
 			var btnClass = "info";
-			if ("Probability_Y" in response) {
-				var risk = parseFloat(response['Probability_Y'].value);
+			if ("Probability_yes" in response) {
+				var risk = parseFloat(response['Probability_yes'].value);
 				//console.log(risk, response);
 				if (risk < 0.3) {
 					icon.addClass('fa-check-circle').css('color', 'green');

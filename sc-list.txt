@@ -1,6 +1,9 @@
 <cspapp>/bootstrap-4.5.2
 <cspapp>/demo.js
 <cspapp>/index.html
+<cspapp>/isc/burger.png
+<cspapp>/isc/logo.png
+<cspapp>/isc/profile.png
 <cspapp>/jquery-3.4.1.min.js
 Alteryx.Encounter.cls
 Alteryx.EncounterCurrent.cls

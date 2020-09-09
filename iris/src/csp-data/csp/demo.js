@@ -19,13 +19,13 @@ function getRisk(patient, dischargeTo) {
 				if (risk < 0.3) {
 					icon.addClass('fa-check-circle').css('color', 'green');
 				} else if (risk < 0.7) {
-					icon.addClass('fa-exclamation-triangle').css('color', 'yellow');
+					icon.addClass('fa-exclamation-triangle').css('color', '#ffc107');
 					btnClass = "warning";
 				} else if (risk < 0.9) {
-					icon.addClass('fa-exclamation-circle').css('color', 'orange');
+					icon.addClass('fa-exclamation-circle').css('color', 'tomato');
 					btnClass = "danger";
 				} else {
-					icon.addClass('fa-times-circle').css('color', 'red');
+					icon.addClass('fa-times-circle').css('color', 'firebrick');
 					btnClass = "danger";
 				}
 				var title = 'Readmission risk: '+risk;

@@ -20,12 +20,89 @@
   .table td {
 	  vertical-align: middle;
   }
+  
+  table.isc-header {
+  	width: 100%;
+	height: 40px;
+	border-top: 4px solid #333695;
+	border-bottom: 1px solid #CBCBCB;
+  }
+  
+  td.isc-header-menu {
+	border-right: 1px solid #CBCBCB;
+	width: 40px;
+	text-align: center;
+	cursor: pointer; 
+  }
+  
+  td.isc-header-logo {
+	border-right: 1px solid #CBCBCB;
+	width: 40px;
+	text-align: center;
+	cursor: pointer; 
+  }
+  
+  td.isc-header-title {
+	border-right: 1px solid #CBCBCB;
+	color: #2B2B2B;
+    /* font-family: "Noto Sans";*/
+	font-size: 13px;
+	font-weight: 600;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-transform: uppercase;
+    padding-left: 12px;
+  }
+  
+  td.isc-header-profile {
+	width: 37px;
+	text-align: right;
+	cursor: pointer; 
+  }
+  
+  td.isc-header-username {
+	width: 70px;
+	color: #2B2B2B;
+    /* font-family: "Noto Sans";*/
+	font-size: 13px;
+	font-weight: 600;
+    letter-spacing: 0;
+    line-height: 18px;
+    padding-left: 5px;
+    padding-right: 12px;
+	cursor: pointer; 
+  }
+  
+  /* ISC frost overrides */
+  table.table {
+    border: 1px solid #CBCBCB;
+    border-radius: 4px;
+  }
+  
+  th {
+    color: #2B2B2B;
+    /* font-family: "Noto Sans";*/
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 18px;
+    border-bottom: 1px solid #CBCBCB;
+  }
+  
   </style>
  </head>
  <body>
-  <div class="container">
-   <h2>Patients to be discharged</h2>
-   <table class="table table-striped table-hover table-sm">
+  <table class="isc-header">
+   <tr>
+    <td class="isc-header-menu"><img src="isc/burger.png" style="height: 30px;" /></td>
+    <td class="isc-header-logo"><img src="isc/logo.png" style="height: 30px;" /></td>
+    <td class="isc-header-title">Patients to be discharged</td>
+    <td class="isc-header-profile"><img src="isc/profile.png" style="height: 30px;" /></td>
+    <td class="isc-header-username">Dr. Jones</td>
+   </tr>
+  </table>
+  <div class="container" style="padding-top: 20px;">
+   <table class="table table-hover table-sm">
     <thead>
      <tr>
       <th>Patient name</th>

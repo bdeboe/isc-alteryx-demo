@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2020.2">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="42" y="42" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File RecordLimit="" FileFormat="23">odbc:DSN=IRIS-Alteryx|||"Alteryx"."EncounterHistory"</File>
+          <FormatSpecificOptions>
+            <PreSQL />
+            <PreSQLOnConfig>True</PreSQLOnConfig>
+            <NoProgress>True</NoProgress>
+            <CacheData>False</CacheData>
+            <TableStyle>Quoted</TableStyle>
+            <ReadUncommitted>False</ReadUncommitted>
+            <PostSQL />
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>DSN=IRIS-Alteryx
+Query="Alteryx"."EncounterHistory"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Encounter_ID" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Patient_Name" size="200" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Age" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Gender" size="10" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Race" size="10" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Admit_Date" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="DateTime" />
+            <Field name="Discharge_Date" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="DateTime" />
+            <Field name="Length_Of_Stay" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="ICU_Days" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Diagnosis_Description" size="200" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Diagnosis_Group" size="200" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Procedure_Description" size="200" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="APR_DRG_Description" size="200" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="APR_DRG_Severity" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="MS_DRG_Description" size="200" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Chronic_Condition_Count" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Operation_Count" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Operation_Visits_30" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Operation_Visits_6" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="Int32" />
+            <Field name="Department" size="100" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="State" size="10" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+            <Field name="Discharged_To" size="100" source="File: odbc:DSN=IRIS-Alteryx|||&quot;Alteryx&quot;.&quot;EncounterHistory&quot;" type="V_String" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="2">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="174" y="18" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\bdeboe\AppData\Local\Temp\Engine_24064_a3fb9cf87ac54e618f4d95542e340ad8_\Engine_21812_3648c32900e24dcd8a09d33be8799290_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="3">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="30" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="25">C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <ImportLine>1</ImportLine>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>ReadmissionData.xlsx
+Query=`Sheet1$`</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="encounter_key" source="File: C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`" type="Double" />
+            <Field name="admit_date" source="File: C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`" type="Date" />
+            <Field name="discharge_date" source="File: C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`" type="Date" />
+            <Field name="readmit_date" source="File: C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`" type="Date" />
+            <Field name="readmit_discharge_date" source="File: C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`" type="Date" />
+            <Field name="readmit_days" source="File: C:\Users\bdeboe\Desktop\Alteryx\IRISDemo\Input\ReadmissionData.xlsx|||`Sheet1$`" type="Double" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="4">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.JoinMultiple.JoinMultiple">
+        <Position x="174" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <JoinByRecPos value="False" />
+          <JoinFields>
+            <JoinInfo connection="#1">
+              <Field field="Encounter_ID" />
+            </JoinInfo>
+            <JoinInfo connection="#2">
+              <Field field="encounter_key" />
+            </JoinInfo>
+          </JoinFields>
+          <CartesianMode>Error</CartesianMode>
+          <OutputJoinOnly value="False" />
+          <SelectConfiguration>
+            <Configuration outputConnection="Output">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Input_#1_Encounter_ID" selected="True" />
+                <SelectField field="Input_#1_Patient_Name" selected="True" />
+                <SelectField field="Input_#1_Age" selected="True" />
+                <SelectField field="Input_#1_Gender" selected="True" />
+                <SelectField field="Input_#1_Race" selected="True" />
+                <SelectField field="Input_#1_Admit_Date" selected="True" />
+                <SelectField field="Input_#1_Discharge_Date" selected="True" />
+                <SelectField field="Input_#1_Length_Of_Stay" selected="True" />
+                <SelectField field="Input_#1_ICU_Days" selected="True" />
+                <SelectField field="Input_#1_Diagnosis_Description" selected="True" />
+                <SelectField field="Input_#1_Diagnosis_Group" selected="True" />
+                <SelectField field="Input_#1_Procedure_Description" selected="True" />
+                <SelectField field="Input_#1_APR_DRG_Description" selected="True" />
+                <SelectField field="Input_#1_APR_DRG_Severity" selected="True" />
+                <SelectField field="Input_#1_MS_DRG_Description" selected="True" />
+                <SelectField field="Input_#1_Chronic_Condition_Count" selected="True" />
+                <SelectField field="Input_#1_Operation_Count" selected="True" />
+                <SelectField field="Input_#1_Operation_Visits_30" selected="True" />
+                <SelectField field="Input_#1_Operation_Visits_6" selected="True" />
+                <SelectField field="Input_#1_Department" selected="True" />
+                <SelectField field="Input_#1_State" selected="True" />
+                <SelectField field="Input_#1_Discharged_To" selected="True" />
+                <SelectField field="Input_#2_admit_date" selected="False" rename="Input_#2_admit_date" />
+                <SelectField field="Input_#2_discharge_date" selected="False" rename="Input_#2_discharge_date" />
+                <SelectField field="Input_#2_readmit_days" selected="True" />
+                <SelectField field="*Unknown" selected="False" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoinMultiple" />
+    </Node>
+    <Node ToolID="5">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="258" y="90" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="IF [readmit_days] &gt; 0 AND [readmit_days] &lt;= 30 THEN &quot;yes&quot; ELSE &quot;no&quot; ENDIF" field="readmit_30days" size="3" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>readmit_30days = IF [readmit_days] &gt; 0 AND [readmit_days] &lt;= 30 THEN "yes" ELSE ...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="6">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="378" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\bdeboe\AppData\Local\Temp\Engine_24064_a3fb9cf87ac54e618f4d95542e340ad8_\Engine_21812_6c2a96a8a7354b8794287deefe1c105a_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="7">
+      <GuiSettings Plugin="Decision_Tree">
+        <Position x="498" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="curPage">Home</Value>
+          <Value name="curTab">model</Value>
+          <Value name="curToggle">toggle-main</Value>
+          <Value name="display.static">True</Value>
+          <Value name="set_seed_cv">True</Value>
+          <Value name="showClassificationCV">True</Value>
+          <Value name="showWhenTreePlotAvailable">True</Value>
+          <Value name="use.gini">True</Value>
+          <Value name="use.information">False</Value>
+          <Value name="usesurrogate.0">True</Value>
+          <Value name="usesurrogate.1">False</Value>
+          <Value name="usesurrogate.2">False</Value>
+          <Value name="total.correct">True</Value>
+          <Value name="percent.correct">False</Value>
+          <Value name="model_type">auto</Value>
+          <Value name="auto">True</Value>
+          <Value name="classification">False</Value>
+          <Value name="regression">False</Value>
+          <Value name="tree_summary">Counts</Value>
+          <Value name="Counts">True</Value>
+          <Value name="Proportions">False</Value>
+          <Value name="tree_plot_size">tree.inches</Value>
+          <Value name="tree.inches">True</Value>
+          <Value name="tree.centimeters">False</Value>
+          <Value name="pruning_plot_size">prune.inches</Value>
+          <Value name="prune.inches">True</Value>
+          <Value name="prune.centimeters">False</Value>
+          <Value name="Model Name">Decision_Tree_7</Value>
+          <Value name="Y Var">readmit_30days</Value>
+          <Value name="X Vars">Age,Gender,Race,Length_Of_Stay,ICU_Days,Diagnosis_Description,Diagnosis_Group,Procedure_Description,APR_DRG_Description,APR_DRG_Severity,MS_DRG_Description,Chronic_Condition_Count,Operation_Count,Operation_Visits_30,Operation_Visits_6,Department,State,Discharged_To</Value>
+          <Value name="model.algorithm">rpart</Value>
+          <Value name="posClass">
+          </Value>
+          <Value name="use.weights">False</Value>
+          <Value name="select.weights" />
+          <Value name="splitting_criteria">use.gini</Value>
+          <Value name="surrogate_use">usesurrogate.0</Value>
+          <Value name="surrogate_split_criteria">total.correct</Value>
+          <Value name="min.split">20</Value>
+          <Value name="min.bucket">7</Value>
+          <Value name="xval.folds">10</Value>
+          <Value name="max.depth">20</Value>
+          <Value name="max.bins">
+          </Value>
+          <Value name="set_cp">False</Value>
+          <Value name="cp">0</Value>
+          <Value name="rules">False</Value>
+          <Value name="bands_check">False</Value>
+          <Value name="bands">10</Value>
+          <Value name="subset">False</Value>
+          <Value name="winnow">False</Value>
+          <Value name="GlobalPruning">False</Value>
+          <Value name="fuzzyThreshold">False</Value>
+          <Value name="earlyStopping">False</Value>
+          <Value name="trials">1</Value>
+          <Value name="CF">0.25</Value>
+          <Value name="minCases">2</Value>
+          <Value name="sample">0</Value>
+          <Value name="seed">1</Value>
+          <Value name="use_cv">False</Value>
+          <Value name="numberFolds">5</Value>
+          <Value name="numberTrials">3</Value>
+          <Value name="stratified">False</Value>
+          <Value name="cv_seed">1</Value>
+          <Value name="tree.plot">False</Value>
+          <Value name="Branch Dist">False</Value>
+          <Value name="tree.in.w">5.5</Value>
+          <Value name="tree.in.h">5.5</Value>
+          <Value name="tree.cm.w">13</Value>
+          <Value name="tree.cm.h">14.95</Value>
+          <Value name="tree.graph.resolution">1x</Value>
+          <Value name="tree.pointsize">8</Value>
+          <Value name="prune.plot">False</Value>
+          <Value name="prune.in.w">5.5</Value>
+          <Value name="prune.in.h">5.5</Value>
+          <Value name="prune.cm.w">13</Value>
+          <Value name="prune.cm.h">14.95</Value>
+          <Value name="prune.graph.resolution">1x</Value>
+          <Value name="prune.pointsize">10</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Decision_Tree_7</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Decision_Tree/Supporting_Macros/Decision_Tree.yxmc" EngineDll="Macro" EngineDllEntryPoint="Decision_Tree/Supporting_Macros/Decision_Tree.yxmc" />
+    </Node>
+    <Node ToolID="9">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="606" y="126" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\bdeboe\AppData\Local\Temp\Engine_24064_a3fb9cf87ac54e618f4d95542e340ad8_\Engine_21812_05ce190b500f465ca0d64f4d4d04a3e0_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="10">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="606" y="174" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\bdeboe\AppData\Local\Temp\Engine_24064_a3fb9cf87ac54e618f4d95542e340ad8_\Engine_21812_2a283522ef844d27b606ff5f917f3fdb_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="11">
+      <GuiSettings>
+        <Position x="606" y="78" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="save.rds">False</Value>
+          <Value name="rds.path" />
+          <Value name="save.pmml">False</Value>
+          <Value name="pmml.path" />
+          <Value name="save.iris">True</Value>
+          <Value name="iris.dsn">IRIS-Alteryx</Value>
+          <Value name="iris.classname">Alteryx.PMMLModel</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <Dependencies>
+          <Implicit />
+        </Dependencies>
+      </Properties>
+      <EngineSettings Macro="Output Model IRIS.yxmc" />
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="2" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="3" Connection="Output" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="5" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="5" Connection="Output" />
+      <Destination ToolID="6" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="5" Connection="Output" />
+      <Destination ToolID="7" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Reports" />
+      <Destination ToolID="9" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Interactive" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Output" />
+      <Destination ToolID="11" Connection="Input4" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="True" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>DemoWorkflow</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>

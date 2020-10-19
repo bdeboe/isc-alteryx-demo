@@ -2,7 +2,7 @@
 
 This repository accompanies the [InterSystems Virtual Summit 2020 session](https://www.intersystems.com/virtual-summit-2020/) "Using Alteryx with InterSystems IRIS". You can watch a standalone version of the demo right here:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/U87URIPH91E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Using Alteryx with InterSystems IRIS](https://img.youtube.com/vi/U87URIPH91E/0.jpg)](https://www.youtube.com/watch?v=U87URIPH91E)
 
 Please use the [issues](https://github.com/bdeboe/isc-alteryx-demo/issues) section for any questions, comments or contributions.
 
